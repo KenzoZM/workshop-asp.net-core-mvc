@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ProjetoWebMvc.Models;
+using ProjetoWebMvc.Models.ViewModels;
 using System.Diagnostics;
 
 namespace ProjetoWebMvc.Controllers
@@ -13,6 +13,7 @@ namespace ProjetoWebMvc.Controllers
             _logger = logger;
         }
 
+        
         public IActionResult Index()
         {
             return View();
