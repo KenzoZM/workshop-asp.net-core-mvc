@@ -1,9 +1,16 @@
+using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using ProjetoWebMvc.Models;
+using System.Configuration;
+
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<ProjetoWebMvcContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ProjetoWebMvcContext") ?? throw new InvalidOperationException("Connection string 'ProjetoWebMvcContext' not found.")));
+
+string MySqlConnection = builder.Configuration.GetConnectionString("ProjetoWebMvcContext");
+
+builder.Services.AddDbContextPool<ProjetoWebMvcContext>(options =>
+                    options.UseMySql(MySqlConnection, ServerVersion.AutoDetect(MySqlConnection)));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
