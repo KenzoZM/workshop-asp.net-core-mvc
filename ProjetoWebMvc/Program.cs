@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using ProjetoWebMvc.Models;
 using System.Configuration;
 using ProjetoWebMvc.Data;
+using ProjetoWebMvc.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,7 @@ builder.Services.AddDbContextPool<ProjetoWebMvcContext>(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<SeedingService>();
+builder.Services.AddScoped<SellerService>();
 
 var app = builder.Build();
 
