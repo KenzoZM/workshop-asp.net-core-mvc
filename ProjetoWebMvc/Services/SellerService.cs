@@ -1,5 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using ProjetoWebMvc.Models;
+using ProjetoWebMvc.Services.Exceptions;
+
 namespace ProjetoWebMvc.Services
 {
     public class SellerService
@@ -36,6 +39,23 @@ namespace ProjetoWebMvc.Services
             _context.SaveChanges();
         }
 
- 
+        public void Upadate(Seller obj)
+        {
+            if (!_context.Seller.Any(x => x.Id == obj.Id))
+            {
+                throw new NotFoundException("Id not found");
+            }
+            try
+            {
+                _context.Update(obj);
+                _context.SaveChanges();
+            }
+            catch (DbConcurrencyException e)
+            {
+                throw new DbConcurrencyException(e.Message);
+            }
+            
+            
+        }
     }
 }
