@@ -2,10 +2,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Localization;
 using ProjetoWebMvc.Models;
-using System.Configuration;
 using ProjetoWebMvc.Data;
 using ProjetoWebMvc.Services;
+using System.Globalization;
+using System.Configuration;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +24,18 @@ builder.Services.AddScoped<SellerService>();
 builder.Services.AddScoped<DepartmentService>();
 
 var app = builder.Build();
+
+// definindo local padrão do USA
+var enUS = new CultureInfo("en-US");
+var localizationOptions = new RequestLocalizationOptions 
+{ 
+    DefaultRequestCulture = new RequestCulture("en-US") ,
+    SupportedCultures = new List<CultureInfo> { enUS },
+    SupportedUICultures = new List<CultureInfo> { enUS }
+};
+
+app.UseRequestLocalization(localizationOptions);
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
